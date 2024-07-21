@@ -9,8 +9,8 @@ server for code genie
 - Shaden Hakim
   
 ## Product Goal
-server for code genie
+server for code genie - to be updated
 
 ## General Architecture
-server for code genie
+server for code genie - to be updated
 
