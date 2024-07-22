@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routes import basic_db_functions_route
+from routes import basic_db_functions_route, questions_to_user_route
 
 app = FastAPI()
 
@@ -10,3 +10,4 @@ async def root():
 
 
 app.include_router(basic_db_functions_route.router, prefix='/test')
+app.include_router(questions_to_user_route.router, prefix='/questions')
