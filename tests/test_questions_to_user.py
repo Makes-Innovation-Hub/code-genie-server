@@ -21,3 +21,10 @@ def test_store_data():
     # This pattern represent the response that must be sent
     pattern = r"^Question: '([^']+)\?'\. ([^']+) of id ([^']+) answer: '([^']+)'\. Explanation: '([^']+)'$"
     assert re.match(pattern, response.json()), 'Response does not match the expected pattern'
+
+
+def test_generate_question():
+    response = client.post('/questions/generate-question/')
+    assert response.status_code == 200
+    pattern = r"^.*\?$"
+    assert re.match(pattern, response.json()), 'Response does not match the expected pattern'
