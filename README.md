@@ -17,6 +17,8 @@ This project includes the following main modules:
 - Database
 - Business Logic: OpenAI
 
+![Alt text](images/diagram.png)
+
 ## Environment Variables
 
 The following environment variables are stored in `.env`. Loading and usage of these variables is explained in [Usage](#environment-variables-usage)
