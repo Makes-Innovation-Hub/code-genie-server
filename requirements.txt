@@ -1,3 +1,4 @@
+requests==2.32.3
 annotated-types==0.7.0
 anyio==4.4.0
 certifi==2024.7.4
@@ -34,3 +35,8 @@ uvicorn==0.30.3
 uvloop==0.19.0
 watchfiles==0.22.0
 websockets==12.0
+colorama==0.4.6
+iniconfig==2.0.0
+packaging==24.1
+pluggy==1.5.0
+pytest==8.3.1
