@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from generate_question import get_question_and_answer
+from generateQuestions.generate_question import get_question_and_answer
 
 class TestGetQuestionAndAnswer:
 
