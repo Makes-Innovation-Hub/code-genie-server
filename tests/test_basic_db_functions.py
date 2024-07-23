@@ -1,4 +1,5 @@
 from fastapi.testclient import TestClient
+from data_access_layer.basic_db_functions import *
 from server import app
 import re
 
@@ -7,8 +8,9 @@ client = TestClient(app)
 def test_test_store_in_mongodb():
     response = client.get('/test/')
     assert response.status_code == 200
-    # Make sure that the returned follows the pattern: 'number' was stored successfully
-    pattern = r'^\d+ was stored successfully$'
-    assert re.match(pattern, response.json()), 'Response does not match the expected pattern'
-    # Make sure the number that was inserted is between 0 and 1000
-    assert 0 < int(response.json().split()[0]) < 1000
+    # Fetch the stored number from the response
+    stored_number = int(response.json().split()[0])
+    # Make sure the number is stored in the database
+    assert check_exists_in_db(number=stored_number)
+    # Delete the number from the database
+    delete_number_from_db(number=stored_number)
