@@ -6,7 +6,6 @@ class TestGetQuestionAndAnswer:
 
     @patch('openai.ChatCompletion.create')
     def test_get_question_and_answer(self, mock_openai):
-        # Mock a successful API response
         mock_openai.return_value = {
             'choices': [
                 {'message': {'content': "What is the capital of France?\nParis"}}

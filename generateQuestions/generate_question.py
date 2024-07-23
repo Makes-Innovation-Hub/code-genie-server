@@ -30,6 +30,4 @@ def get_question_and_answer(topic):
     except Exception as e:
         return {"error": str(e)}
     
-topic = "Data structures"
-result = get_question_and_answer(topic)
-print(result)
+
