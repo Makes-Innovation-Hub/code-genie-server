@@ -36,15 +36,16 @@ def generate_question(topic: str):
     response = get_question_and_answer(topic=topic)
     question = response['question']
 
+    while not question:
+        response = get_question_and_answer(topic=topic)
+        question = response['question']
+
     db_question = collection.find_one({'question': question})
 
     while db_question:
         response = get_question_and_answer(topic=topic)
         question = response['question']
         db_question = collection.find_one({'question': question})
-        if db_question:
-            if not db_question['question']:
-                db_question = True
 
     collection.insert_one(response)
     # The insert_one function adds _id field to the response variable which is not serializable by FastAPI
@@ -55,6 +56,10 @@ def generate_question_with_multiple_answers(topic: str):
     collection = database['GeneratedMultipleQuestions']
     response = get_question_and_answers(topic=topic)
     question = response['question']
+
+    while not question:
+        response = get_question_and_answers(topic=topic)
+        question = response['question']
 
     db_question = collection.find_one({'question': question})
 
@@ -70,3 +75,6 @@ def generate_question_with_multiple_answers(topic: str):
     # The insert_one function adds _id field to the response variable which is not serializable by FastAPI
     del response['_id']
     return response
+
+
+print(generate_question('Geography'))
