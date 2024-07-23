@@ -18,5 +18,4 @@ async def store_data(question: str = Form(...), answer: str = Form(...),
 @router.post('/generate-question/')
 async def generate_question(topic: str = Form(...)):
     response = questions_to_user.generate_question(topic=topic)
-
     return response
