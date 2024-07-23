@@ -5,7 +5,7 @@ import re
 
 client = TestClient(app)
 
-def test_test_store_in_mongodb():
+def test_test_store_in_db():
     response = client.get('/test/')
     assert response.status_code == 200
     # Fetch the stored number from the response

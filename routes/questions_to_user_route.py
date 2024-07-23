@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Form
 
-from DAL.questions_to_user import QuestionsToUser
+from data_access_layer import questions_to_user
 
 router = APIRouter()
 
@@ -9,7 +9,6 @@ router = APIRouter()
 async def store_data(question: str = Form(...), answer: str = Form(...),
                      explanation: str = Form(...), difficulty: str = Form(...),
                      user_name: str = Form(...), user_id: str = Form(...)):
-    questions_to_user = QuestionsToUser()
     response = questions_to_user.store_data(question=question, answer=answer, explanation=explanation,
                                             difficulty=difficulty, user_name=user_name, user_id=user_id)
 
@@ -17,8 +16,7 @@ async def store_data(question: str = Form(...), answer: str = Form(...),
 
 
 @router.post('/generate-question/')
-async def generate_question():
-    questions_to_user = QuestionsToUser()
-    response = questions_to_user.generate_question()
+async def generate_question(topic: str = Form(...)):
+    response = questions_to_user.generate_question(topic=topic)
 
     return response
