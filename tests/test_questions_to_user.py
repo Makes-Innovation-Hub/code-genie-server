@@ -1,6 +1,4 @@
 import re
-
-import requests
 from fastapi.testclient import TestClient
 from server import app
 

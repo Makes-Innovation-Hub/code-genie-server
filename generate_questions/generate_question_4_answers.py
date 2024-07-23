@@ -55,8 +55,3 @@ def get_question_and_answers(topic):
         }
     except Exception as e:
         return {"error": str(e)}
-
-# Example usage
-topic = "Machine Learning"
-result = get_question_and_answers(topic)
-print(result)

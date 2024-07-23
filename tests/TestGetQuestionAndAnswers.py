@@ -1,7 +1,5 @@
 import pytest
-from unittest.mock import patch
-import openai
-from generateQuestions.generate_question_4_answers import get_question_and_answers 
+from generate_questions.generate_question_4_answers import get_question_and_answers
 
 def test_get_question_and_answers(mocker):
     mock_openai = mocker.patch('openai.ChatCompletion.create')

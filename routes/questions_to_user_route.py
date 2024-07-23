@@ -19,3 +19,8 @@ async def store_data(question: str = Form(...), answer: str = Form(...),
 async def generate_question(topic: str = Form(...)):
     response = questions_to_user.generate_question(topic=topic)
     return response
+
+@router.post('/generate-question-with-multiple-answers/')
+async def generate_question_with_multiple_answers(topic: str = Form(...)):
+    response = questions_to_user.generate_question_with_multiple_answers(topic=topic)
+    return response
