@@ -75,6 +75,3 @@ def generate_question_with_multiple_answers(topic: str):
     # The insert_one function adds _id field to the response variable which is not serializable by FastAPI
     del response['_id']
     return response
-
-
-print(generate_question('Geography'))
