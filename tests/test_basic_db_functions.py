@@ -4,8 +4,7 @@ import re
 
 client = TestClient(app)
 
-
-def test_test():
+def test_test_store_in_mongodb():
     response = client.get('/test/')
     assert response.status_code == 200
     # Make sure that the returned follows the pattern: 'number' was stored successfully
