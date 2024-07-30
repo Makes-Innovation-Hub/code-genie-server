@@ -36,17 +36,24 @@ To load environment variables from a `.env` file in Python, you can use the `pyt
 1. Save an `.env` file in your project. **WARNING**: make sure it is found in `.gitignore`. Save the above [Variables](#environment-variables-explanation) in the `.env` file using the exact provided names.
 
 2. **Install the `python-dotenv` package** (if you haven’t already):
+
    ```sh
    pip install python-dotenv
 
    ```
+
 3. A brief example on how to load a specific environment variable:
 
    ```python
-   import os
    from dotenv import load_dotenv
+   from globals import globals
 
-   load_dotenv()
+
+   # Load the appropriate .env file
+   if globals.env_status == "dev":
+      load_dotenv('.env.dev')
+   else:
+      load_dotenv('.env.prod')
 
    mongodb_host = os.getenv('MONGODB_HOST')
    ```

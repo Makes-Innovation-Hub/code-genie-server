@@ -22,17 +22,15 @@ if __name__ == "__main__":
 
     if globals.env_status not in ["dev", "prod"]:
         raise ValueError("Invalid environment! Choose either 'dev' or 'prod'.")
-
-     # Load the appropriate .env file
-    if globals.env_status == "dev":
-        load_dotenv('.env.dev')
-    else:
-        load_dotenv('.env.prod')
-
+        
     print(f"Starting server in {globals.env_status} environment")
 
+    # Load the appropriate .env file
+    # run the appropriate server
     if globals.env_status == "dev":
+        load_dotenv('.env.dev')
         uvicorn.run(app, host="127.0.0.1", port=8002)
     else:
+        load_dotenv('.env.prod')
         uvicorn.run(app, host="127.0.0.1", port=8001)
     
