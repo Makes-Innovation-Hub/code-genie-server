@@ -2,7 +2,7 @@ import random
 
 from globals import globals
 
-def test_store_in_db():
+def store_num_in_db():
     mongo_client = globals.mongo_client
     if mongo_client:
         db = mongo_client["test_db"]
@@ -11,6 +11,8 @@ def test_store_in_db():
         if not check_exists_in_db(number=random_number):
             collection.insert_one({'random_number': random_number})
         return random_number
+    else:
+        raise ValueError("mongo db client was not found")
 
 def check_exists_in_db(number: int):
     mongo_client = globals.mongo_client
