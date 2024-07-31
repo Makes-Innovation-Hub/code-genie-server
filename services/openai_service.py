@@ -3,12 +3,17 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
+openai_key = os.environ.get("OPENAI_KEY")
+if openai_key is None:
+    raise ValueError("Could not load openai key correctly")
+client = OpenAI(api_key=os.environ.get("OPENAI_KEY"))
 
-
-def get_question_and_answer(topic='', difficulty=''):
-    prompt = f"I need you to generate a new  technical question and answer for a computer science graduate "
-    if topic:
-        prompt += f'about: {topic}'
+def get_question_and_answer(topic, difficulty) -> dict:
+    prompt = (f"I need you to generate a new  technical question and answer for a"
+              f"computer science graduate about: {topic}. return just the question"
+              f"starting with 'Question: ' and after the question start the answer"
+              f"with 'Answer: '. Don't include any pleasantries or any other text"
+              f"before the question or after the answer")
     if difficulty:
         prompt += f',please make sure that the difficulty of the question is {difficulty}'
     try:
@@ -23,12 +28,11 @@ def get_question_and_answer(topic='', difficulty=''):
 
         return final_answer
     except Exception as e:
-        return {"error": str(e)}
-
+        print("error in gen question and answer",e)
+        raise e
 
 def get_chat_completion(prompt: str) -> str:
     try:
-
         client = OpenAI(api_key=os.environ.get("OPENAI_KEY"))
         response = client.chat.completions.create(
             model="gpt-3.5-turbo",
@@ -43,6 +47,4 @@ def get_chat_completion(prompt: str) -> str:
         return generated_text
     except Exception as e:
         print('e: ', e)
-        return e
-
-
+        raise e
