@@ -1,7 +1,7 @@
 import argparse
 import uvicorn
 import os
-from config import db_config
+from config import db_config, server_config
 from globals import globals
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -17,24 +17,8 @@ app.include_router(basic_db_functions_route.router, prefix='/db')
 app.include_router(openai_route.router, prefix='/question')
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="FastAPI server")
-    parser.add_argument('--env', type=str, default='dev', help='Environment (choices: dev, prod, default: dev)')
-    args = parser.parse_args()
-
-    if args.env not in ["dev", "prod"]:
-        raise ValueError("Invalid environment! Choose either 'dev' or 'prod'.")
-    
-    globals.env_status = args.env
-
-     # Load the appropriate .env file
     try:
-        file_path = f".env.{globals.env_status}"
-        if os.path.isfile(file_path):
-            load_dotenv(file_path)
-            print(f"Starting server in {globals.env_status} environment")
-        else:
-            raise FileExistsError(f"Could not find .env file: {file_path}")
-        
+        server_config.setup_env_vars()
         # start db configuration
         db_config.set_mongo_client()
         # start server
