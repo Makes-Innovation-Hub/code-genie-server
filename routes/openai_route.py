@@ -7,8 +7,9 @@ router = APIRouter()
 @router.post('/basic')
 async def gen_basic_question(body:GenBody):
     topic = body.topic
+    difficulty = body.difficulty
     try:
-        answer = get_question_and_answer(topic)
+        answer = get_question_and_answer(topic,difficulty)
         return answer
     except Exception as e:
         print(e)

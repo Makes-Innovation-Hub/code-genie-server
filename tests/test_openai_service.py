@@ -1,6 +1,7 @@
 import os
 import requests
-import pytest
+
+from services.openai_service import get_question_and_answer
 
 def test_openai_endpoint():
     server_url = os.getenv("SERVER_URL")
@@ -23,10 +24,37 @@ def test_question_generation_endpoint():
     assert "answer" in answer
     assert "python" in answer["question"].lower()
 
+def test_generate_question_with_difficaulty():
+    q_n_a_dict = get_question_and_answer(topic="python",difficulty='hard')
+    assert "question" in q_n_a_dict
+    assert "answer" in q_n_a_dict
+    assert q_n_a_dict["difficulty"] == 'hard'
+    
 def test_question_generation_fail():
     # testing send req without topic - should fail with 422
     server_url = os.getenv("SERVER_URL")
     assert server_url is not None
     url = f"{server_url}/question/basic"
     response = requests.post(url)
+    assert response.status_code == 422
+    
+def test_question_generation_fail_with_diff():
+    # testing send req without topic with difficulty - should fail with 422
+    server_url = os.getenv("SERVER_URL")
+    assert server_url is not None
+    url = f"{server_url}/question/basic"
+    response = requests.post(url,json={"difficulty":"hard"})
+    assert response.status_code == 422
+
+def test_question_generation_wrong_difficulty():
+    # testing send req with wrong value for difficulty
+    # i.e - not ["easy","medium","hard","very hard"] | None
+    server_url = os.getenv("SERVER_URL")
+    assert server_url is not None
+    url = f"{server_url}/question/basic"
+    response = requests.post(url,json={"topic":"python","difficulty":"fake"})
+    assert response.status_code == 422
+    response = requests.post(url,json={"topic":"python","difficulty":"super hard"})
+    assert response.status_code == 422
+    response = requests.post(url,json={"topic":"python","difficulty":"HARD"})
     assert response.status_code == 422
