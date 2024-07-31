@@ -1,5 +1,5 @@
-from pydantic import BaseModel,Literal
-
+from pydantic import BaseModel
+from typing import Literal
 class GenQuestionBody(BaseModel):
     topic: str
-    difficulty: Literal["easy","medium","hard","very hard"] | None
+    difficulty: None | Literal["easy","medium","hard","very hard"] = None

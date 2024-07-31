@@ -13,15 +13,20 @@ def get_question_and_answer(topic, difficulty) -> dict:
               f"computer science graduate about: {topic}. return just the question"
               f"starting with 'Question: ' and after the question start the answer"
               f"with 'Answer: '. Don't include any pleasantries or any other text"
-              f"before the question or after the answer")
+              f"before the question or after the answer. add an empty line"
+              f"between the question and the answer.")
     if difficulty:
         prompt += f',please make sure that the difficulty of the question is {difficulty}'
     try:
         generated_text = get_chat_completion(prompt)
         lines = generated_text.split('\n\n')
-        question = lines[0].split(':')[1].strip()
-        answer = lines[1].split(':')[1].strip()
-
+        question = None
+        answer = None
+        for line in lines:
+            if line.lower().startswith("question:"):
+                question = line[len("Question:"):].strip()
+            elif line.lower().startswith("answer:"):
+                answer = line[len("Answer:"):].strip()
         final_answer = {"question": question, "answer": answer}
         if difficulty:
             final_answer["difficulty"] = difficulty
