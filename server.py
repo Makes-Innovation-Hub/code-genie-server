@@ -3,7 +3,6 @@ import uvicorn
 import os
 from config import db_config, server_config
 from globals import globals
-from dotenv import load_dotenv
 from fastapi import FastAPI
 from routes import basic_db_functions_route, openai_route
 

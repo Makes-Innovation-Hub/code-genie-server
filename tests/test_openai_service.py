@@ -56,3 +56,5 @@ def test_question_generation_wrong_difficulty():
     assert response.status_code == 422
     response = requests.post(url,json={"topic":"python","difficulty":"super hard"})
     assert response.status_code == 422
+    response = requests.post(url,json={"topic":"python","difficulty":"HARD"})
+    assert response.status_code == 422
