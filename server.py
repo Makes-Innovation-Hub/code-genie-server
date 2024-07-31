@@ -22,7 +22,7 @@ if __name__ == "__main__":
         db_config.set_mongo_client()
         # start server
         port = 8002 if globals.env_status == "dev" else 8001
-        uvicorn.run("server:app", host="127.0.0.1", port=port, reload=True, reload_dirs=["."])
+        uvicorn.run(app, host="127.0.0.1", port=port)
         
     except Exception as e:
         print(e)

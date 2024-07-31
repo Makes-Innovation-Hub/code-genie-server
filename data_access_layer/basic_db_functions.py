@@ -1,9 +1,9 @@
 import random
 
-from globals import globals
+from globals import globals as gb
 
 def store_num_in_db():
-    mongo_client = globals.mongo_client
+    mongo_client = gb.mongo_client
     if mongo_client:
         db = mongo_client["test_db"]
         collection = db["test"]
@@ -15,7 +15,7 @@ def store_num_in_db():
         raise ValueError("mongo db client was not found")
 
 def check_exists_in_db(number: int):
-    mongo_client = globals.mongo_client
+    mongo_client = gb.mongo_client
     if mongo_client:
         db = mongo_client["test_db"]
         collection = db["test"]
@@ -25,7 +25,7 @@ def check_exists_in_db(number: int):
 
 def delete_number_from_db(number: int):
     try:
-        mongo_client = globals.mongo_client
+        mongo_client = gb.mongo_client
         if mongo_client:
             db = mongo_client["test_db"]
             collection = db["test"]

@@ -9,9 +9,7 @@ values_to_del = []
 def setup_and_teardown():
     # Code to run before all tests
     print("\nSetup before all tests")
-    
     yield
-    
     # Code to run after all tests
     print("\nTeardown after all tests")
     # Delete the number from the database
