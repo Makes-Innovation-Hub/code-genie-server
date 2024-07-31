@@ -1,5 +1,7 @@
 import argparse
 import uvicorn
+import os
+
 from globals import globals
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -26,9 +28,12 @@ if __name__ == "__main__":
 
      # Load the appropriate .env file
     try:
-        load_dotenv(f'.env.{globals.env_status}')
-        print(f"Starting server in {globals.env_status} environment")
-
+        file_path = f".env.{globals.env_status}"
+        if os.path.isfile(file_path):
+            load_dotenv(file_path)
+            print(f"Starting server in {globals.env_status} environment")
+        else:
+            raise FileExistsError(f"Could not find .env file: {file_path}")
         if globals.env_status == "dev":
             uvicorn.run(app, host="127.0.0.1", port=8002)
         else:

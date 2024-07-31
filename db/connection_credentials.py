@@ -1,8 +1,8 @@
-import argparse
+import os
 from urllib.parse import quote_plus
 from dotenv import load_dotenv
 from globals import globals
-import os
+
 
 # Load the appropriate .env file
 if globals.env_status == "dev":
