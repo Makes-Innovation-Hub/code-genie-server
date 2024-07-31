@@ -1,7 +1,7 @@
 import argparse
 import uvicorn
 import os
-
+from config import db_config
 from globals import globals
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -34,10 +34,13 @@ if __name__ == "__main__":
             print(f"Starting server in {globals.env_status} environment")
         else:
             raise FileExistsError(f"Could not find .env file: {file_path}")
-        if globals.env_status == "dev":
-            uvicorn.run(app, host="127.0.0.1", port=8002)
-        else:
-            uvicorn.run(app, host="127.0.0.1", port=8001)
+        
+        # start db configuration
+        db_config.set_mongo_client()
+        
+        # start server
+        port = 8002 if globals.env_status == "dev" else 8001
+        uvicorn.run(app, host="127.0.0.1", port=port)
         
     except Exception as e:
         print(e)
