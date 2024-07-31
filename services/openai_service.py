@@ -25,11 +25,10 @@ def get_chat_completion(prompt: str) -> str:
             messages=[
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=150,
+            max_tokens=800,
             temperature=0.7,
         )
         generated_text = response.choices[0].message.content.strip()
-
         return generated_text
     except Exception as e:
         print('e: ', e)
@@ -45,10 +44,13 @@ def generate_question_prompt(topic, difficulty = None, answers_num= None):
                    f"Make SURE that the answers list includes {answers_num} values "
                    f"Make SURE that the explanations list includes {answers_num} values. ")
     else:
-        prompt += "Please generate a single answer."
+        prompt += """Please generate a single answer and a single explanation.  
+                    Make SURE to put the answer and the explanation inside the
+                    correct location within the json format. """
     prompt += """Don't include any pleasantries or any other text that is not
-               specified in the json format I have given you. return Keys and 
-               values wrapped by double quotes and NOT single quotes. """
+               specified in the json format I have given you. MAKE SURE to return Keys and 
+               values wrapped by double quotes and NOT single quotes. MAKE SURE 
+               that your response is a valid JSON"""
     if difficulty:
         prompt += f'Please make sure that the difficulty of the question is {difficulty}. '
     return prompt
@@ -58,8 +60,7 @@ def process_chat_response(chat_response,difficulty):
         json_response = json.loads(chat_response)
         if difficulty:
             json_response["difficulty"] = difficulty
-        print('json_response: ', json_response)
         return json_response
     except Exception as e:
         print(f"error in processing chat response: ",e)
-        return {}
+        raise e
