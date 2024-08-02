@@ -3,10 +3,10 @@ from openai import OpenAI
 import json
 from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format
 
-openai_key = os.environ.get("OPENAI_KEY")
+openai_key = os.getenv("OPENAI_API_KEY")
 if openai_key is None:
     raise ValueError("Could not load openai key correctly")
-client = OpenAI(api_key=os.environ.get("OPENAI_KEY"))
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 def get_question_and_answer(topic, difficulty, answers_num) -> dict:
     prompt = generate_question_prompt(topic,difficulty,answers_num)

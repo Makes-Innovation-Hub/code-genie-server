@@ -1,7 +1,6 @@
 import os
 import requests
 import json
-from services.openai_service import get_question_and_answer
 
 req_post_headers = {
     "content-type":"application/json"
@@ -24,7 +23,12 @@ def test_question_generation_endpoint():
 
 def test_generate_question_with_difficaulty():
     # req with topic and difficulty - no answers num
-    q_n_a_dict = get_question_and_answer(topic="python",difficulty='hard', answers_num=None)
+    server_url = os.getenv("SERVER_URL")
+    assert server_url is not None
+    url = f"{server_url}/question/generate"
+    response = requests.post(url,json={"topic":"python","difficulty":"hard"})
+    assert response.status_code == 200
+    q_n_a_dict = response.json()
     assert "Question" in q_n_a_dict
     assert "Answer" in q_n_a_dict
     assert "Explanations" in q_n_a_dict
