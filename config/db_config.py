@@ -10,8 +10,7 @@ def set_mongo_client():
         mongodb_password = quote_plus(os.getenv('MONGODB_PASSWORD'))
         mongodb_host = os.getenv('MONGODB_HOST')
         if mongodb_username and mongodb_password and mongodb_host:
-            # mongodb_url = f'mongodb+srv://{mongodb_username}:{mongodb_password}@{mongodb_host}'
-            mongodb_url = 'mongodb://localhost:27017/'
+            mongodb_url = f'mongodb+srv://{mongodb_username}:{mongodb_password}@{mongodb_host}'
             client = MongoClient(mongodb_url)
             globals.mongo_client = client
             return
