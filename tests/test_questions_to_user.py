@@ -1,6 +1,5 @@
-import os
-import requests
-from data_access_layer.questions_to_user import check_question_existence_and_delete
+from data_access_layer.questions_to_user import check_question_existence_and_delete, store_data
+from pymongo import MongoClient
 
 def test_store_data():
     data = {
@@ -11,9 +10,13 @@ def test_store_data():
         'user_name': 'basil',
         'user_id': '12'
     }
-    # server_url = 'http://localhost:8002'
-    server_url = os.getenv('SERVER_URL')
-    response = requests.post(f'{server_url}/questions-to-user/store-data/', data=data)
-    assert response.status_code == 200
+    client = MongoClient('mongodb://localhost:27017/')
+    response = store_data(data['question'], data['answer'], data['explanation'],
+                          data['difficulty'], data['user_name'], data['user_id'], client)
+    # Check response pattern
+    assert f"Question: '{data['question']}'." in response
+    assert f"{data['user_name']} of id {data['user_id']}" in response
+    assert f"answer: '{data['answer']}'." in response
+    assert f"Explanation: '{data['explanation']}'" in response
     # Check if the question was added to the database and then delete it
-    assert check_question_existence_and_delete(data=data)
+    assert check_question_existence_and_delete(data=data, client=client)

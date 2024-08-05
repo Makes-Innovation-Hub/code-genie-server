@@ -1,14 +1,17 @@
 from globals.globals import mongo_client
-from pymongo import MongoClient
 
-# client = MongoClient('mongodb://localhost:27017/')
-# database = client['telegram_bot_data']
-# collection = database['Questions']
+def setup_mongodb(client):
+    if client:
+        database = client['telegram_bot_data']
+        collection = database['Questions']
+    else:
+        database = mongo_client['telegram_bot_data']
+        collection = database['Questions']
 
-database = mongo_client['telegram_bot_data']
-collection = database['Questions']
+    return collection
 
-def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str):
+def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str, client=None):
+    collection = setup_mongodb(client)
     db_question = collection.find_one({'question': question})
 
     if db_question:
@@ -31,11 +34,13 @@ def store_data(question: str, answer: str, explanation: str, difficulty: str, us
 
     return f"Question: '{question}'. {user_name} of id {user_id} answer: '{answer}'. Explanation: '{explanation}'"
 
-def check_question_existence_and_delete(data):
-    db_question = collection.find_one({'question': data['question'], 'difficulty': data['difficulty']})
+def check_question_existence_and_delete(data, client=None):
+    collection = setup_mongodb(client)
+    filter = {'question': data['question'], 'difficulty': data['difficulty']}
+    db_question = collection.find_one(filter)
 
     if db_question:
-        collection.delete_one(data)
+        collection.delete_one(filter)
         return True
 
     return False
