@@ -1,10 +1,9 @@
 from fastapi import FastAPI, Request
-from logging_pac.logging_setup import logger, RequestIDMiddleware,log_request_handling
+from logging_packages.logging_setup import logger, RequestIDMiddleware,log_request_handling
 from routes import basic_db_functions_route, openai_route
 from config import db_config, server_config
 from globals import globals
 import uvicorn
-
 app = FastAPI()
 app.add_middleware(RequestIDMiddleware)
 
