@@ -23,11 +23,14 @@ def find_latest_log_file(directory, file_extension='*.log'):
 #this file get the latest log file that created and checks if we need to create a new one 
 def logfile_to_send():
     last_log =find_latest_log_file('./logging_pac/logs')
-    last_log_size = get_file_size(last_log)
-    log_number = ''.join([i for i in last_log if i.isdigit()])
-    number = int(log_number)
-    if last_log_size >= 20000:
-        number +=1
+    if last_log != None:
+        last_log_size = get_file_size(last_log)
+        log_number = ''.join([i for i in last_log if i.isdigit()])
+        number = int(log_number)
+        if last_log_size >= 20000:
+            number +=1
+    else:
+        number = 0
     next_log_file= (f"log{number}.log")
     log_file = os.path.join('logging_pac','logs', next_log_file)
     return log_file
