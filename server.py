@@ -9,9 +9,9 @@ async def root():
     return 'Hello from FastAPI server'
 
 def add_routes():
-    from routes import basic_db_functions_route, question_route, users
+    from routes import basic_db_functions_route, openai_route, users
     app.include_router(basic_db_functions_route.router, prefix='/db')
-    app.include_router(question_route.router, prefix='/question')
+    app.include_router(openai_route.router, prefix='/question')
     app.include_router(users.router, prefix='/users')
 
 if __name__ == "__main__":
