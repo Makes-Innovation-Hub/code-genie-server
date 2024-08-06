@@ -1,5 +1,6 @@
 from data_access_layer.questions_to_user import check_question_existence_and_delete, store_data
 from pymongo import MongoClient
+from globals import globals
 
 def test_store_data():
     data = {
@@ -10,7 +11,7 @@ def test_store_data():
         'user_name': 'basil',
         'user_id': '12'
     }
-    client = MongoClient('mongodb://localhost:27017/')
+    client = globals.mongo_client
     response = store_data(data['question'], data['answer'], data['explanation'],
                           data['difficulty'], data['user_name'], data['user_id'], client)
     # Check response pattern
