@@ -1,9 +1,19 @@
 import uvicorn
+from contextlib import asynccontextmanager
 from config import db_config, server_config
 from globals import globals
 from fastapi import FastAPI
+from data_access_layer import basic_db_functions
 
-app = FastAPI()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Actions to perform at startup
+    basic_db_functions.check_and_add_allowed_topics()
+    yield
+    # Actions to perform at shutdown
+
+app = FastAPI(lifespan=lifespan)
+
 @app.get('/')
 async def root():
     return 'Hello from FastAPI server'

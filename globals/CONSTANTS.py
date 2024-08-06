@@ -11,3 +11,5 @@ GEN_QUESTION_JSON_FORMAT = {
                         be the explanation to answer inside index 0 of the answers list. 
                         Don't use single quotes as a part of an answer. """
 }
+
+ALLOWED_TOPICS = {"python", "algorithms", "dbs", "system design", "sql"}
