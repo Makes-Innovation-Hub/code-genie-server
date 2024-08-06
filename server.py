@@ -1,11 +1,20 @@
-import uvicorn
+from fastapi import FastAPI, Request
+from logging_packages.logging_setup import logger, RequestIDMiddleware,log_request_handling
+from routes import basic_db_functions_route, openai_route
 from config import db_config, server_config
 from globals import globals
-from fastapi import FastAPI
-
+import uvicorn
 app = FastAPI()
+app.add_middleware(RequestIDMiddleware)
+
+
 @app.get('/')
-async def root():
+async def root(request: Request):
+
+    request_id = request.state.request_id
+    log_request_handling(request_id, "this is a new server test")
+    logger.info(f"[Request ID: {request_id}] this is a new format")
+    logger.info("try this one")
     return 'Hello from FastAPI server'
 
 def add_routes():
