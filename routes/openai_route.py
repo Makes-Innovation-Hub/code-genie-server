@@ -5,27 +5,19 @@ from data_types.openai_req_types import GenQuestionBody as GenBody
 
 router = APIRouter()
 
-@router.post('/basic')
-async def gen_basic_question(body:GenBody, request: Request):
-    try:
-        answer = get_question_and_answer(topic)
-        request_id = request.state.request_id
-        log_request_handling(request_id, "this is test from the basic question")
-    except Exception as e:
-        print(e)
-        return e
       
 @router.post('/generate')
 async def gen_question(body:GenBody, response: Response, request: Request):
     topic = body.topic
     difficulty = body.difficulty
     answers_num = body.answers_num
+    request_id = request.state.request_id
     try:
-        request_id = request.state.request_id
-        answer = get_question_and_answer(topic,difficulty,answers_num)
-        log_request_handling(request_id, "this is test from the basic question")
+        log_request_handling(request_id, "generating a new question.")
+        answer = get_question_and_answer(topic,difficulty,answers_num, request)
+        log_request_handling(request_id, "new question generated successfully.")
         return answer
     except Exception as e:
-        print(e)
+        log_request_handling(request_id, e)
         response.status_code = 400
         return e

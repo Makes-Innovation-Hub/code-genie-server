@@ -12,9 +12,8 @@ app.add_middleware(RequestIDMiddleware)
 async def root(request: Request):
 
     request_id = request.state.request_id
-    log_request_handling(request_id, "this is a new server test")
+    log_request_handling(request_id, "get message from the server ")
     logger.info(f"[Request ID: {request_id}] this is a new format")
-    logger.info("try this one")
     return 'Hello from FastAPI server'
 
 def add_routes():
@@ -24,14 +23,14 @@ def add_routes():
 
 if __name__ == "__main__":
     try:
-        server_config.setup_env_vars()
+       
+        logger.info("Starting a new server")
         # start db configuration
         db_config.set_mongo_client()
         # start server
         add_routes()
         port = 8002 if globals.env_status == "dev" else 8001
-        uvicorn.run(app, host="127.0.0.1", port=port)
-        
+        uvicorn.run(app, host="127.0.0.1", port=port)        
     except Exception as e:
         print(e)
         exit(1)

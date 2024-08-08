@@ -36,7 +36,7 @@ def logfile_to_send():
     return log_file
 
 file_name = logfile_to_send()
-logging.basicConfig(level = logging.DEBUG, filename = file_name, 
+logging.basicConfig(level = logging.INFO, filename = file_name, 
                     format= "%(asctime)s - %(levelname)s - %(processName)s - %(message)s")
 logger = logging.getLogger("request_logger")
 
