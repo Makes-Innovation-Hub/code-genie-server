@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Form
 from data_access_layer import basic_db_functions,questions_to_user
+from globals import globals
 router = APIRouter()
 
 @router.get('/test')
@@ -13,11 +14,11 @@ async def store_rand_num_in_db():
 
 
 @router.post('/store-data/')
-async def store_data(question: str = Form(...), answer: str = Form(...),
+async def store_data(question: str = Form(...), answer: str = Form(...),topic: str = Form(...),
                      explanation: str = Form(...), difficulty: str = Form(...),
                      user_name: str = Form(...), user_id: str = Form(...)):
 
     response = questions_to_user.store_data(question=question, answer=answer, explanation=explanation,
-                                            difficulty=difficulty, user_name=user_name, user_id=user_id)
+                                            difficulty=difficulty, user_name=user_name, user_id=user_id,client=globals.mongo_client)
 
     return response

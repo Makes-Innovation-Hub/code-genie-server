@@ -88,3 +88,46 @@ python server.py --env prod
 ```
 
 This will start the server on `127.0.0.1` (localhost) at port `8001`.
+
+# Mongodb setup collections 
+## users collection:
+```bash  
+{
+  "user_id": "1",
+  "questions": [
+    {
+      "question_id": "1",
+      "score": 9,
+      "answer": "my answer"
+    },
+    {
+      "question_id": "2",
+      "score": 4,
+      "answer": "my answer"
+    },
+    {
+      "question_id": "3",
+      "score": 8,
+      "answer": "my answer"
+    }
+  ],
+  "topics": {
+    "python": {
+      "easy": {
+        "questions_answered": 1,
+        "questions_answered_correctly": 1
+      },
+      "hard": {
+        "questions_answered": 1,
+        "questions_answered_correctly": 0
+      }
+    },
+    "java": {
+      "hard": {
+        "questions_answered": 1,
+        "questions_answered_correctly": 1
+      }
+    }
+  }
+}  
+```
