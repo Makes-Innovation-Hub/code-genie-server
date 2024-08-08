@@ -5,6 +5,7 @@ from globals import globals
 def test_store_data():
     data = {
         'question': 'Are you mad?',
+        'topic': 'general',
         'answer': 'No',
         'explanation': 'I am happy',
         'difficulty': 'easy',
@@ -13,7 +14,7 @@ def test_store_data():
     }
 
     response = store_data(data['question'], data['answer'], data['explanation'],
-                          data['difficulty'], data['user_name'], data['user_id'], globals.mongo_client)
+                          data['difficulty'], data['user_name'], data['user_id'],data['topic'], globals.mongo_client)
     # Check response pattern
     assert f"Question: '{data['question']}'." in response
     assert f"{data['user_name']} of id {data['user_id']}" in response

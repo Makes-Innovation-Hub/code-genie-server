@@ -10,6 +10,7 @@ class GenQuestionBody(BaseModel):
 
 class QARequest(BaseModel):
     user_id: str
-    question_id: str
-    question: str | None = None
+    question_text: str
+    difficulty: None | Literal["easy", "medium", "hard", "very hard"] = None
+    topic: str
     answer: str

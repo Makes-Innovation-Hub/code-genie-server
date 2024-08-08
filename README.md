@@ -96,19 +96,20 @@ This will start the server on `127.0.0.1` (localhost) at port `8001`.
   "user_id": "1",
   "questions": [
     {
-      "question_id": "1",
+      
+      "question_text":"what is your name?"
       "score": 9,
-      "answer": "my answer"
+      "answer": "My name is Aya"
     },
     {
-      "question_id": "2",
+      "question_text":"what is string?"
       "score": 4,
       "answer": "my answer"
     },
     {
-      "question_id": "3",
-      "score": 8,
-      "answer": "my answer"
+      "question_text":"what is the result of 2+5?"
+      "score": 10,
+      "answer": "7"
     }
   ],
   "topics": {
@@ -122,7 +123,7 @@ This will start the server on `127.0.0.1` (localhost) at port `8001`.
         "questions_answered_correctly": 0
       }
     },
-    "java": {
+    "general": {
       "hard": {
         "questions_answered": 1,
         "questions_answered_correctly": 1

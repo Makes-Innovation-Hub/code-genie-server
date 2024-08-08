@@ -5,9 +5,9 @@ router = APIRouter()
 
 
 @router.post('/add-user-stats/')
-async def add_user_stats(user_id: str = Form(...), question_id: str = Form(...),
+async def add_user_stats(user_id: str = Form(...), question_text: str = Form(...),
                          topic: str = Form(...), difficulty: str = Form(...),
                          answer_correct: bool = Form(...), score: int = Form(...),answer:str = Form(...)):
-    response = users.add_user_stats(user_id, question_id, score,answer, topic, difficulty,
+    response = users.add_user_stats(user_id, question_text, score,answer, topic, difficulty,
                                     answer_correct,client=globals.mongo_client)
     return response

@@ -1,11 +1,9 @@
 from data_access_layer.setup_mongodb import setup_mongodb
 
-
-def store_data(question: str, question_id: str, topic: str, answer: str, explanation: str, difficulty: str,
-               user_name: str, user_id: str,
-               client):
+def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str,topic:str,
+               client=None):
     collection = setup_mongodb(client, 'Questions')
-    db_question = collection.find_one({'question_id': question_id})
+    db_question = collection.find_one({'question': question})
 
     if db_question:
         db_question['answers'][user_id] = answer
@@ -16,7 +14,6 @@ def store_data(question: str, question_id: str, topic: str, answer: str, explana
 
     else:
         data = {
-            'question_id': question_id,
             'question': question,
             'topic': topic,
             'answers': {user_id: answer},
@@ -27,12 +24,10 @@ def store_data(question: str, question_id: str, topic: str, answer: str, explana
 
         collection.insert_one(data)
 
-    return f"Question: '{question}' of question_id '{question_id}' . {user_name} of id {user_id} answer: '{answer}'. Explanation: '{explanation}'"
+    return f"Question: '{question}'. {user_name} of id {user_id} answer: '{answer}'. Explanation: '{explanation}'"
 
 
-
-
-def check_question_existence_and_delete(data, client):
+def check_question_existence_and_delete(data, client=None):
     collection = setup_mongodb(client, 'Questions')
     filter = {'question': data['question'], 'difficulty': data['difficulty']}
     db_question = collection.find_one(filter)
@@ -42,9 +37,3 @@ def check_question_existence_and_delete(data, client):
         return True
 
     return False
-
-
-def get_question_info(question_id, client):
-    collection = setup_mongodb(client, 'Questions')
-    db_question = collection.find_one({'question_id': question_id})
-    return db_question

@@ -5,7 +5,7 @@ from globals import globals
 def test_add_user_stats():
     data = {
         'user_id': '10000',
-        'question_id': '1',
+        'question_text': 'what is your pet name?',
         'topic': 'Animals',
         'difficulty': 'hard',
         'answer_correct': True,
@@ -13,14 +13,14 @@ def test_add_user_stats():
         'answer': 'my answer'
     }
 
-    response = add_user_stats(user_id=data['user_id'], question_id=data['question_id'], topic=data['topic'],
+    response = add_user_stats(user_id=data['user_id'], question_text=data['question_text'], topic=data['topic'],
                               difficulty=data['difficulty'],
                               answer_correct=data['answer_correct'], score=data['score'], answer=data['answer'],
                               client=globals.mongo_client)
     response = str(response)
     assert 'user_id' in response
     assert 'questions' in response
-    assert data['question_id'] in response
+    assert data['question_text'] in response
     assert 'topics' in response
     assert data['topic'] in response
     assert data['difficulty'] in response
