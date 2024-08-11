@@ -1,19 +1,8 @@
-from globals import globals
-
-def setup_mongodb(client):
-    if client:
-        database = client['telegram_bot_data']
-        collection = database['Questions']
-    else:
-        database = globals.mongo_client['telegram_bot_data']
-        collection = database['Questions']
-
-    return collection
-
+from data_access_layer.setup_mongodb import setup_mongodb
 
 def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str,
                client=None):
-    collection = setup_mongodb(client)
+    collection = setup_mongodb(client, 'Questions')
     db_question = collection.find_one({'question': question})
 
     if db_question:
@@ -38,7 +27,7 @@ def store_data(question: str, answer: str, explanation: str, difficulty: str, us
 
 
 def check_question_existence_and_delete(data, client=None):
-    collection = setup_mongodb(client)
+    collection = setup_mongodb(client, 'Questions')
     filter = {'question': data['question'], 'difficulty': data['difficulty']}
     db_question = collection.find_one(filter)
 
