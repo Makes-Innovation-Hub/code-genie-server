@@ -88,3 +88,32 @@ python server.py --env prod
 ```
 
 This will start the server on `127.0.0.1` (localhost) at port `8001`.
+
+
+# Questions Database
+
+An example of how a question and its details is stored in the database:
+
+```json
+{
+  "_id": {
+    "$oid": "66b89fea6b1e15e0af25ffce"
+  },
+  "question": "How are you?",
+  "answers": {
+    "636459": "Bad",
+    "944113": "Good"
+  },
+  "explanations": {
+    "636459": "I lost the last FIFA match",
+    "944113": "I won the last FIFA match"
+  },
+  "difficulty": "easy",
+  "users_details": {
+    "636459": "mohamad",
+    "944113": "shaheen"
+  }
+}
+```
+
+As shown in the above example, one question can be answered by many users and each user is represented by his ID
