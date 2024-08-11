@@ -173,4 +173,36 @@ An example of how a user and its details is stored in the database:
     }
   }
 }
+```  
+## leaderboard points collection:
+```bash  
+{
+  "topic": topic,
+  "hard": {
+    user_1_id: points,
+    user_2_id: points
+  },
+  "easy": {
+    user_1_id: points,
+    user_2_id: points
+  } 
+}
+```  
+### example:
+```bash  
+{
+  "topic": "python",
+  "hard": {
+    "1": 0,
+    "2": 15
+  },
+  "easy": {
+    "3": 77
+  },
+  "medium": {
+    "3": 20
+  }
+}
 ```
+  
+
