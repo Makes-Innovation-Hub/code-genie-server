@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Response
 from globals import globals
 from data_access_layer import users
-from services.openai_service import get_question_and_answer,evaluate_answer
+from services.openai_service import get_question_and_answer, evaluate_answer
 from data_types.openai_req_types import GenQuestionBody as GenBody, QARequest
 from pymongo.errors import PyMongoError
 
@@ -22,7 +22,6 @@ async def gen_question(body: GenBody, response: Response):
         return e
 
 
-
 @router.post('/evaluate')
 async def evaluate_question(body: QARequest, response: Response):
     try:
@@ -36,6 +35,8 @@ async def evaluate_question(body: QARequest, response: Response):
                              difficulty=difficulty,
                              score=evaluation_score["Score"], answer_correct=(evaluation_score["Score"] >= 5),
                              client=globals.mongo_client)
+        evaluation_score["question"] = question_text
+        evaluation_score["user_answer"] = answer
         return evaluation_score
     except PyMongoError as e:
         print(f"Database error: {str(e)}")

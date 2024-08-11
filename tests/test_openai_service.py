@@ -167,6 +167,8 @@ def test_evaluate_answer_endpoint_success():
     assert "Score" in eval_dict.keys()
     assert "Explanation" in eval_dict.keys()
     assert eval_dict['Score'] >= 5
+    assert eval_dict['user_answer'] == body['answer']
+    assert eval_dict['question'] == body['question_text']
     body['score'] = eval_dict['Score']
     body['is_correct'] = eval_dict['Score'] >= 5
     assert check_user_existence_and_delete(data=body)
