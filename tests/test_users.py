@@ -5,18 +5,16 @@ from globals import globals
 def test_add_user_stats():
     data = {
         'user_id': '10000',
-        'question_text': 'what is your pet name?',
+        'question_text': 'Which class of animals are newts members of?',
         'topic': 'Animals',
-        'difficulty': 'hard',
-        'answer_correct': True,
+        'difficulty': 'easy',
+        'is_correct': True,
         'score': 8,
         'answer': 'my answer'
     }
 
-    response = add_user_stats(user_id=data['user_id'], question_text=data['question_text'], topic=data['topic'],
-                              difficulty=data['difficulty'],
-                              answer_correct=data['answer_correct'], score=data['score'], answer=data['answer'],
-                              client=globals.mongo_client)
+    response = add_user_stats(data['user_id'], data['question_text'],data['score'],data['answer'], data['topic'], data['difficulty'],
+                              data['is_correct'])
     response = str(response)
     assert 'user_id' in response
     assert 'questions' in response
@@ -28,4 +26,4 @@ def test_add_user_stats():
     assert 'questions_answered_correctly' in response
     assert data['answer'] in response
     assert str(data['score']) in response
-    assert check_user_existence_and_delete(data=data, client=globals.mongo_client)
+    assert check_user_existence_and_delete(data=data)

@@ -2,13 +2,15 @@ from data_access_layer.setup_mongodb import setup_mongodb
 from pymongo.errors import PyMongoError
 
 
-def add_user_stats(user_id: str, question_text: str, score: int, answer: str, topic: str, difficulty: str ,
+def add_user_stats(user_id: str, question_text: str, score: int,answer: str, topic: str,
+                   difficulty: str,
                    answer_correct: bool,
-                   client):
+                   client=None):
     try:
         collection = setup_mongodb(client, 'users')
         db_user = collection.find_one({'user_id': user_id})
-        question_score = {'question_text': question_text, 'score': score, 'answer': answer}
+        question_score = {'question_text': question_text, 'score': score, 'answer': answer, 'topic': topic,
+                          'is_correct': answer_correct}
         if db_user:
             db_user['questions'].append(question_score)
             if topic not in db_user['topics'].keys():
@@ -46,7 +48,8 @@ def add_user_stats(user_id: str, question_text: str, score: int, answer: str, to
         print(f"Unexpected error: {str(e)}")
         raise Exception(f"Unexpected error: {str(e)}")
 
-def check_user_existence_and_delete(data, client):
+
+def check_user_existence_and_delete(data, client=None):
     collection = setup_mongodb(client, 'users')
     db_user = collection.find_one({'user_id': data['user_id']})
 
