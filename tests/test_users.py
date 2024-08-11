@@ -3,17 +3,17 @@ from data_access_layer.users import *
 def test_add_user_stats():
     data = {
         'user_id': '10000',
-        'question_id': '1',
+        'question_text': 'Which class of animals are newts members of?',
         'topic': 'Animals',
-        'difficulty': 'hard',
+        'difficulty': 'easy',
         'answer_correct': True,
     }
 
-    response = add_user_stats(data['user_id'], data['question_id'], data['topic'], data['difficulty'],
+    response = add_user_stats(data['user_id'], data['question_text'], data['topic'], data['difficulty'],
                               data['answer_correct'])
     response = str(response)
     assert 'user_id' in response
-    assert 'questions_id' in response
+    assert 'questions' in response
     assert 'topics' in response
     assert data['topic'] in response
     assert data['difficulty'] in response
