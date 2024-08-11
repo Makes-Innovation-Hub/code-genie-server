@@ -1,9 +1,8 @@
 import os
 import requests
 import json
+from data_access_layer.users import check_user_existence_and_delete
 from services.openai_service import evaluate_answer
-
-
 
 req_post_headers = {
     "content-type": "application/json"
@@ -168,6 +167,10 @@ def test_evaluate_answer_endpoint_success():
     assert "Score" in eval_dict.keys()
     assert "Explanation" in eval_dict.keys()
     assert eval_dict['Score'] >= 5
+    body['score'] = eval_dict['Score']
+    body['is_correct'] = eval_dict['Score'] >= 5
+    assert check_user_existence_and_delete(data=body)
+
 
 def test_evaluate_answer_endpoint_failure():
     # testing send req without body - should fail with 422
