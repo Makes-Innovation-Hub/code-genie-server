@@ -28,3 +28,11 @@ if __name__ == "__main__":
         print(e)
         exit(1)
 
+else:
+    # This is found to work with local database and local server for faster runtime
+    from pymongo import MongoClient
+    from dotenv import load_dotenv
+    globals.env_status = 'dev'
+    load_dotenv('.env.dev')
+    globals.mongo_client = MongoClient('localhost', 27017)
+    add_routes()
