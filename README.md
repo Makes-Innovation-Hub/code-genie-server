@@ -175,7 +175,7 @@ An example of how a user and its details is stored in the database:
 }
 ```  
 ## leaderboard points collection:
-```bash  
+```json  
 {
   "topic": topic,
   "hard": {
@@ -189,7 +189,7 @@ An example of how a user and its details is stored in the database:
 }
 ```  
 ### example:
-```bash  
+```json  
 {
   "topic": "python",
   "hard": {
