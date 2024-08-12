@@ -1,7 +1,8 @@
+import ast
 import os
 from openai import OpenAI
 import json
-from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format
+from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format, EVALUATE_QUESTION_JSON_FORMAT
 
 
 def get_question_and_answer(topic, difficulty, answers_num) -> dict:
@@ -60,3 +61,15 @@ def process_chat_response(chat_response,difficulty):
     except Exception as e:
         print(f"error in processing chat response: ",e)
         raise e
+
+def evaluate_answer(question: str, answer: str) -> dict:
+    prompt = f""" You are an expert evaluator. Evaluate the following answer to the question and provide a short 
+    explanation followed by a score between 0 and 10, with 0 being the lowest ,if the answer is empty evaluate 0.\n
+    Question: {question}
+    Answer: {answer}
+    Provide your evaluation in the following format {EVALUATE_QUESTION_JSON_FORMAT}:
+    """
+    evaluation = get_chat_completion(prompt)
+    evaluation = ast.literal_eval(evaluation)
+    evaluation["Score"] = int(evaluation["Score"])
+    return evaluation
