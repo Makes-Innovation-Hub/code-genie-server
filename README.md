@@ -89,6 +89,67 @@ python server.py --env prod
 
 This will start the server on `127.0.0.1` (localhost) at port `8001`.
 
+# Mongodb setup collections
+# Users Database
+
+An example of how a user and its details is stored in the database:
+
+```json
+{
+  "_id": {
+    "$oid": "66b8c62485b638ba5da0f934"
+  },
+  "user_id": "636459",
+  "questions": [
+    {
+      "question_text": "How to list all of your services in Docker swarm?",
+      "score": 9,
+      "answer": "docker service ls",
+      "topic": "Docker",
+      "is_correct": true
+    },
+    {
+      "question_text": "How to list all of your services in Docker swarm?",
+      "score": 0,
+      "answer": "my answer",
+      "topic": "Docker",
+      "is_correct": false
+    },
+    {
+      "question_text": "Docker can build images automatically by reading the instructions from",
+      "score": 9,
+      "answer": "Dockerfile",
+      "topic": "Docker",
+      "is_correct": true
+    },
+    {
+      "question_text":  "What is the key difference between React.js functional components and class components regarding state management?",
+      "score": 2,
+      "answer": "my answer",
+      "topic": "Docker",
+      "is_correct": false
+    }
+  ],
+  "topics": {
+    "Docker": {
+      "hard": {
+        "questions_answered": 1,
+        "questions_answered_correctly": 1
+      },
+      "easy": {
+        "questions_answered": 2,
+        "questions_answered_correctly": 1
+      }
+    },
+    "Linux": {
+      "hard": {
+        "questions_answered": 1,
+        "questions_answered_correctly": 0
+      }
+    }
+  }
+}
+```
 
 # Questions Database
 
@@ -118,63 +179,9 @@ An example of how a question and its details is stored in the database:
 
 As shown in the above example, one question can be answered by many users and each user is represented by his ID
 
-# Users Database
+ 
+## leaderboard points collection:  
 
-An example of how a user and its details is stored in the database:
-
-```json
-{
-  "_id": {
-    "$oid": "66b8c62485b638ba5da0f934"
-  },
-  "user_id": "636459",
-  "questions": [
-    {
-      "How to list all of your services in Docker swarm?": [
-        "Docker",
-        true
-      ]
-    },
-    {
-      "Docker host's IP address by default is 192.168.99.100": [
-        "Docker",
-        false
-      ]
-    },
-    {
-      "Docker can build images automatically by reading the instructions from:": [
-        "Docker",
-        true
-      ]
-    },
-    {
-      "What is the key difference between React.js functional components and class components regarding state management?": [
-        "Linux",
-        false
-      ]
-    }
-  ],
-  "topics": {
-    "Docker": {
-      "hard": {
-        "questions_answered": 1,
-        "questions_answered_correctly": 1
-      },
-      "easy": {
-        "questions_answered": 2,
-        "questions_answered_correctly": 1
-      }
-    },
-    "Linux": {
-      "hard": {
-        "questions_answered": 1,
-        "questions_answered_correctly": 0
-      }
-    }
-  }
-}
-```  
-## leaderboard points collection:
 ```json  
 {
   "topic": topic,
@@ -205,4 +212,3 @@ An example of how a user and its details is stored in the database:
 }
 ```
   
-

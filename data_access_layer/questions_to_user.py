@@ -1,6 +1,6 @@
 from data_access_layer.setup_mongodb import setup_mongodb
 
-def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str,
+def store_data(question: str, answer: str, explanation: str, difficulty: str, user_name: str, user_id: str,topic:str,
                client=None):
     collection = setup_mongodb(client, 'Questions')
     db_question = collection.find_one({'question': question})
@@ -15,6 +15,7 @@ def store_data(question: str, answer: str, explanation: str, difficulty: str, us
     else:
         data = {
             'question': question,
+            'topic': topic,
             'answers': {user_id: answer},
             'explanations': {user_id: explanation},
             'difficulty': difficulty,
