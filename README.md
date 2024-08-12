@@ -149,7 +149,7 @@ An example of how a user and its details is stored in the database:
     }
   }
 }
-```  
+```
 
 # Questions Database
 
@@ -179,3 +179,36 @@ An example of how a question and its details is stored in the database:
 
 As shown in the above example, one question can be answered by many users and each user is represented by his ID
 
+ 
+## leaderboard points collection:  
+
+```json  
+{
+  "topic": topic,
+  "hard": {
+    user_1_id: points,
+    user_2_id: points
+  },
+  "easy": {
+    user_1_id: points,
+    user_2_id: points
+  } 
+}
+```  
+### example:
+```json  
+{
+  "topic": "python",
+  "hard": {
+    "1": 0,
+    "2": 15
+  },
+  "easy": {
+    "3": 77
+  },
+  "medium": {
+    "3": 20
+  }
+}
+```
+  
