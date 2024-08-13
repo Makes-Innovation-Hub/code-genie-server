@@ -32,6 +32,7 @@ if __name__ == "__main__":
         port = 8002 if globals.env_status == "dev" else 8001
         uvicorn.run(app, host="127.0.0.1", port=port)        
     except Exception as e:
+        logger.info(e)
         print(e)
         exit(1)
         

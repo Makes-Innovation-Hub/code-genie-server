@@ -8,6 +8,7 @@ from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format
 
 openai_key = os.getenv("OPENAI_API_KEY")
 if openai_key is None:
+    logger.error( "Could not load openai key correctly")
     raise ValueError("Could not load openai key correctly")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
