@@ -30,7 +30,6 @@ async def evaluate_question(body: QARequest,ai_answer:str, response: Response):
         topic = body.topic
         difficulty = body.difficulty
         answer = body.answer
-        print(ai_answer)
         evaluation_score = evaluate_answer(question=question_text, answer=answer,ai_answer=ai_answer)
         users.add_user_stats(user_id=user_id, question_text=question_text, answer=answer, topic=topic,
                              difficulty=difficulty,
