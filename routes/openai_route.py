@@ -15,6 +15,8 @@ async def gen_question(body: GenBody, response: Response):
     answers_num = body.answers_num
     try:
         answer = get_question_and_answer(topic, difficulty, answers_num)
+        while answers_num != len(answer['Answer']):
+            answer = get_question_and_answer(topic, difficulty, answers_num)
         return answer
     except Exception as e:
         print(e)
