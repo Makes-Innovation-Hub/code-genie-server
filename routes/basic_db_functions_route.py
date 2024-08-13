@@ -15,3 +15,5 @@ async def store_rand_num_in_db( request: Request):
     except Exception as e:
         log_request_handling(request_id, e)
         raise e
+
+

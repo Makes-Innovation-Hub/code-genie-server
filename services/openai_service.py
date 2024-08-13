@@ -1,16 +1,18 @@
+import ast
 import os
 from openai import OpenAI
 from fastapi import APIRouter, Request, Response
 import json
 from logging_packages.logging_setup import logger, RequestIDMiddleware,log_request_handling
 import dotenv
-from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format
+from globals.CONSTANTS import GEN_QUESTION_JSON_FORMAT as json_format, EVALUATE_QUESTION_JSON_FORMAT
 
 openai_key = os.getenv("OPENAI_API_KEY")
 if openai_key is None:
     logger.error( "Could not load openai key correctly")
     raise ValueError("Could not load openai key correctly")
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
 
 def get_question_and_answer(topic, difficulty, answers_num, request: Request) -> dict:
     request_id = request.state.request_id
@@ -76,3 +78,17 @@ def process_chat_response(chat_response,difficulty, request: Request):
     except Exception as e:
         log_request_handling(request_id, f"error in processing chat response: {e}")
         raise e
+        print(f"error in processing chat response: ",e)
+        raise e
+
+def evaluate_answer(question: str, answer: str) -> dict:
+    prompt = f""" You are an expert evaluator. Evaluate the following answer to the question and provide a short 
+    explanation followed by a score between 0 and 10, with 0 being the lowest ,if the answer is empty evaluate 0.\n
+    Question: {question}
+    Answer: {answer}
+    Provide your evaluation in the following format {EVALUATE_QUESTION_JSON_FORMAT}:
+    """
+    evaluation = get_chat_completion(prompt)
+    evaluation = ast.literal_eval(evaluation)
+    evaluation["Score"] = int(evaluation["Score"])
+    return evaluation
