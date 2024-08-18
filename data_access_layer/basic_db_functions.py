@@ -1,4 +1,5 @@
 import random
+from pymongo import errors
 from globals.CONSTANTS import ALLOWED_TOPICS
 from globals import globals as gb
 
@@ -36,21 +37,3 @@ def delete_number_from_db(number: int):
     except Exception as e:
         print(e)
         return e
-
-def check_and_add_allowed_topics():
-    mongo_client = gb.mongo_client
-    if mongo_client:
-        db = mongo_client["telegram_bot_data"]
-        collection = db['topics']
-        
-        existing_topics = {doc['name'] for doc in collection.find()}
-
-        missing_topics = ALLOWED_TOPICS - existing_topics
-
-    if missing_topics:
-        collection.insert_many([{"name": topic} for topic in missing_topics])
-        print(f"Inserted missing topics: {missing_topics}")
-    else:
-        print("All allowed topics are present.")
-
-        mongo_client.close()
