@@ -89,6 +89,15 @@ python server.py --env prod
 
 This will start the server on `127.0.0.1` (localhost) at port `8001`.
 
+# Running the tests
+
+In order to run the tests you have to run the following commands:
+
+```shell
+cd path/to/your/project # Replace with the path to your project (root)
+pytest
+```
+
 # Mongodb setup collections
 # Users Database
 
