@@ -13,11 +13,12 @@ async def root():
 
 
 def add_routes():
-    from routes import basic_db_functions_route, openai_route, questions_to_user, users
+    from routes import basic_db_functions_route, openai_route, questions_to_user, users, usernames_route
     app.include_router(basic_db_functions_route.router, prefix='/db')
     app.include_router(openai_route.router, prefix='/question')
     app.include_router(questions_to_user.router, prefix='/questions-to-user')
     app.include_router(users.router, prefix='/users')
+    app.include_router(usernames_route.router, prefix='/usernames')
 
 
 if __name__ == "__main__":
