@@ -11,5 +11,10 @@ GEN_QUESTION_JSON_FORMAT = {
                         be the explanation to answer inside index 0 of the answers list. 
                         Don't use single quotes as a part of an answer. """
 }
+EVALUATE_QUESTION_JSON_FORMAT = {
+    "Score": "here you will write your score from 1-10",
+    "Explanation": "here you will write your short explanation"
+}
+
 
 ALLOWED_TOPICS = {"python", "algorithms", "dbs", "system design", "sql"}
