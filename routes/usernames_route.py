@@ -1,12 +1,20 @@
 from fastapi import APIRouter
-from data_access_layer.usernames_dal import store_username
+from data_access_layer import usernames_dal
 
 router = APIRouter()
 
 @router.post('/')
-async def add_username(username: str):
+async def store_username(username: str):
     try:
-        response = store_username(username=username)
+        response = usernames_dal.store_username(username=username)
+        return response
+    except Exception as e:
+        raise e
+
+@router.get('/')
+async def fetch_username_for_challenge():
+    try:
+        response = usernames_dal.fetch_username_for_challenge()
         return response
     except Exception as e:
         raise e
