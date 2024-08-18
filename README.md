@@ -91,6 +91,8 @@ This will start the server on `127.0.0.1` (localhost) at port `8001`.
 
 # Running the tests
 
+**NOTE:** Make sure that the server is up and running.
+
 In order to run the tests you have to run the following commands:
 
 ```shell
