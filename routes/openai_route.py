@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, HTTPException
 from globals import globals
 from data_access_layer import users
 from services.openai_service import get_question_and_answer, evaluate_answer
@@ -13,15 +13,22 @@ async def gen_question(body: GenBody, response: Response):
     topic = body.topic
     difficulty = body.difficulty
     answers_num = body.answers_num
+    max_attempts = 3
+    attempts = 0
+    
     try:
-        answer = get_question_and_answer(topic, difficulty, answers_num)
-        while answers_num != len(answer['Answer']):
+        while attempts < max_attempts:
             answer = get_question_and_answer(topic, difficulty, answers_num)
-        return answer
+            if answers_num == len(answer['Answer']):
+                return answer
+            attempts += 1
+            
+        raise HTTPException(status_code=400, detail="Failed to generate a valid question after 3 attempts.")
+    
     except Exception as e:
         print(e)
         response.status_code = 400
-        return e
+        return {"error": str(e)}
 
 
 @router.post('/evaluate')
