@@ -1,6 +1,6 @@
 import pytest
 from fastapi import HTTPException
-from data_access_layer.usernames_dal import store_username, check_and_delete_username
+from data_access_layer.users_challenge_db_functions import store_username, check_and_delete_username
 
 def test_store_username_success():
     username = 'test_username ' * 5
