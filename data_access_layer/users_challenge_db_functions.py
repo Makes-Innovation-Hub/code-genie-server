@@ -18,7 +18,7 @@ def store_username(username: str, client=None):
     return username_data
 
 def fetch_username_for_challenge(client=None, username=None):
-    collection = setup_mongodb(client, 'usernames')
+    collection = setup_mongodb(client, 'users_challenge')
     if username:
         db_username = collection.find_one({'username': username, 'available': True})
     else:
