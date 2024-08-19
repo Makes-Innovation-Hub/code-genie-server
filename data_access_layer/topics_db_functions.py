@@ -33,3 +33,21 @@ def get_topics():
         raise f"Connection error occurred: {c}"
     except Exception as e:
         raise f"An unexpected error occurred: {e}"
+
+
+def add_new_topic(topic: str):
+    try:
+        collection = setup_mongodb(client=None, collection_name='topics')
+        collection.insert_one({"name": topic})
+    except errors.ConnectionFailure as c:
+        raise f"Connection error occurred: {c}"
+    except Exception as e:
+        raise f"An unexpected error occurred: {e}"
+
+def check_topic_and_delete(topic:str):
+    collection = setup_mongodb(client=None, collection_name='topics')
+    topic_exists = collection.find_one({"name": topic})
+    if topic_exists:
+        collection.delete_one({"name": topic})
+        return True
+    return False
