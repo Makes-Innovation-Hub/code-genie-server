@@ -1,4 +1,6 @@
-from data_access_layer.questions_to_user import check_question_existence_and_delete, store_data
+import os
+import requests
+from data_access_layer.questions_db_functions import check_question_existence_and_delete, store_data
 from globals import globals
 
 
@@ -14,7 +16,7 @@ def test_store_data():
     }
 
     response = store_data(data['question'], data['answer'], data['explanation'],
-                          data['difficulty'], data['user_name'], data['user_id'],data['topic'], globals.mongo_client)
+                          data['difficulty'], data['user_name'], data['user_id'], data['topic'], globals.mongo_client)
     # Check response pattern
     assert f"Question: '{data['question']}'." in response
     assert f"{data['user_name']} of id {data['user_id']}" in response
@@ -22,3 +24,12 @@ def test_store_data():
     assert f"Explanation: '{data['explanation']}'" in response
     # Check if the question was added to the database and then delete it
     assert check_question_existence_and_delete(data=data, client=globals.mongo_client)
+
+def test_load_topics_success():
+    server_url = os.getenv("SERVER_URL")
+    assert server_url is not None
+    url = f"{server_url}/question/topics"
+    response = requests.get(url)
+    assert response.status_code == 200
+    assert isinstance(response.json(), list)
+    assert all(isinstance(topic, str) for topic in response.json())

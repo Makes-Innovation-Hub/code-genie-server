@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Response
 from globals import globals
-from data_access_layer import users
+from data_access_layer import users_db_functions
 from services.openai_service import get_question_and_answer, evaluate_answer
 from data_types.openai_req_types import GenQuestionBody as GenBody, QARequest
 from pymongo.errors import PyMongoError

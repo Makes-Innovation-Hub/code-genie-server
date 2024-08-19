@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from data_access_layer.users import check_user_existence_and_delete
+from data_access_layer.users_db_functions import check_user_existence_and_delete
 from services.openai_service import evaluate_answer
 
 req_post_headers = {
