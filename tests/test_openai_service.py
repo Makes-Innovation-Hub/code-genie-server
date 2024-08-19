@@ -70,6 +70,13 @@ def test_question_generation_wrong_difficulty():
     response = requests.post(url, json={"topic": "python", "difficulty": "HARD"})
     assert response.status_code == 422
 
+def test_question_generation_invalid_topic():
+    server_url = os.getenv("SERVER_URL")
+    assert server_url is not None
+    url = f"{server_url}/question/generate"
+    response = requests.post(url, json={"topic": "invalid_topic"})
+    assert response.status_code == 400
+    assert "Invalid topic: invalid_topic. Must be one of" in response.json()['detail']
 
 def test_gen_question_answers_num():
     server_url = os.getenv("SERVER_URL")
