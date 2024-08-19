@@ -10,7 +10,7 @@ router = APIRouter()
 async def store_data(question: str = Form(...), answer: str = Form(...), topic: str = Form(...),
                      explanation: str = Form(...), difficulty: str = Form(...),
                      user_name: str = Form(...), user_id: str = Form(...)):
-    response = questions_to_user.store_data(question=question, topic=topic, answer=answer, explanation=explanation,
+    response = questions_db_functions.store_data(question=question, topic=topic, answer=answer, explanation=explanation,
                                             difficulty=difficulty, user_name=user_name, user_id=user_id)
 
     return response
