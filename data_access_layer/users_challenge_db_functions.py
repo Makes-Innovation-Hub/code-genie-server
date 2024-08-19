@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from data_access_layer.setup_mongodb import setup_mongodb
 
 def store_username(username: str, client=None):
-    collection = setup_mongodb(client, 'usernames')
+    collection = setup_mongodb(client, 'users_challenge')
     db_username = collection.find_one({'username': username})
 
     if db_username:
@@ -33,7 +33,7 @@ def fetch_username_for_challenge(client=None, username=None):
     return db_username['username']
 
 def check_and_delete_username(username: str, client=None):
-    collection = setup_mongodb(client, 'usernames')
+    collection = setup_mongodb(client, 'users_challenge')
     db_username = collection.find_one({'username': username})
 
     if not db_username:
