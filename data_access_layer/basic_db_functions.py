@@ -1,5 +1,6 @@
 import random
-
+from pymongo import errors
+from globals.CONSTANTS import ALLOWED_TOPICS
 from globals import globals as gb
 
 def store_num_in_db():
