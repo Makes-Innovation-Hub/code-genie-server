@@ -62,9 +62,10 @@ def process_chat_response(chat_response,difficulty):
         print(f"error in processing chat response: ",e)
         raise e
 
-def evaluate_answer(question: str, answer: str) -> dict:
-    prompt = f""" You are an expert evaluator. Evaluate the following answer to the question and provide a short 
-    explanation followed by a score between 0 and 10, with 0 being the lowest ,if the answer is empty evaluate 0.\n
+def evaluate_answer(question: str, answer: str,ai_answer:str) -> dict:
+    prompt = f"""You are an expert evaluator. Please evaluate the following answer to the question,
+    (in the evaluation score consider the answer {ai_answer} you provided earlier,if the answer is str of digits treat it as int).
+    Provide a brief explanation followed by a score between 0 and 10, with 0 being the lowest. If the answer is empty, give a score of 0.
     Question: {question}
     Answer: {answer}
     Provide your evaluation in the following format {EVALUATE_QUESTION_JSON_FORMAT}:
