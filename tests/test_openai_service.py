@@ -134,7 +134,7 @@ def test_gen_multiple_answers_and_difficulty():
 def test_evaluate_answer_success():
     question = "What is the capital of Italy?"
     answer = 'Rome'
-    evaluation = evaluate_answer(question, answer)
+    evaluation = evaluate_answer(question, answer,'Rome')
     assert isinstance(evaluation, dict)
     assert "Score" in evaluation.keys()
     assert "Explanation" in evaluation.keys()
@@ -144,7 +144,7 @@ def test_evaluate_answer_success():
 def test_evaluate_answer_failure():
     question = "What is the result 2 + 2?"
     answer = '5'
-    evaluation = evaluate_answer(question, answer)
+    evaluation = evaluate_answer(question, answer,'4')
     assert isinstance(evaluation, dict)
     assert "Score" in evaluation.keys()
     assert "Explanation" in evaluation.keys()
@@ -167,6 +167,7 @@ def test_evaluate_answer_endpoint_success():
         json=body,
         headers=req_post_headers,
         timeout=50000
+        , params={'ai_answer': '4'}
     )
     assert response.status_code == 200
     eval_dict = response.json()

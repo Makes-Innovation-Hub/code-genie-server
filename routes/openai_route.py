@@ -14,28 +14,37 @@ async def gen_question(body: GenBody, response: Response):
     topic = body.topic
     difficulty = body.difficulty
     answers_num = body.answers_num
+    max_attempts = 5
+    attempts = 0
+    
     allowed_topics = get_topics()
     if body.topic not in allowed_topics:
         raise HTTPException(status_code=400, detail=f"Invalid topic: {body.topic}. Must be one of {allowed_topics}.")
 
     try:
-        answer = get_question_and_answer(topic, difficulty, answers_num)
-        return answer
+        while attempts < max_attempts:
+            answer = get_question_and_answer(topic, difficulty, answers_num)
+            if answers_num == len(answer['Answer']):
+                return answer
+            attempts += 1
+            
+        raise HTTPException(status_code=400, detail="Failed to generate a valid question after 5 attempts.")
+    
     except Exception as e:
         print(e)
         response.status_code = 400
-        raise e
+        return {"error": str(e)}
 
 
 @router.post('/evaluate')
-async def evaluate_question(body: QARequest, response: Response):
+async def evaluate_question(body: QARequest,ai_answer:str, response: Response):
     try:
         user_id = body.user_id
         question_text = body.question_text
         topic = body.topic
         difficulty = body.difficulty
         answer = body.answer
-        evaluation_score = evaluate_answer(question=question_text, answer=answer)
+        evaluation_score = evaluate_answer(question=question_text, answer=answer,ai_answer=ai_answer)
         users_db_functions.add_user_stats(user_id=user_id, question_text=question_text, answer=answer, topic=topic,
                                           difficulty=difficulty,
                                           score=evaluation_score["Score"],
