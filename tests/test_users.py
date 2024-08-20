@@ -1,4 +1,4 @@
-from data_access_layer.users import *
+from data_access_layer.users_db_functions import *
 from globals import globals
 
 

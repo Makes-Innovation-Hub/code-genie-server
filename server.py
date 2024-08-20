@@ -1,6 +1,6 @@
 import uvicorn
 from config import db_config, server_config
-from data_access_layer.limit_topics import check_and_add_allowed_topics
+from data_access_layer.topics_db_functions import check_and_add_allowed_topics
 from globals import globals
 from fastapi import FastAPI
 
@@ -13,11 +13,11 @@ async def root():
 
 
 def add_routes():
-    from routes import basic_db_functions_route, openai_route, questions_to_user, users
+    from routes import basic_db_functions_route, openai_route, questions_route, users_route
     app.include_router(basic_db_functions_route.router, prefix='/db')
     app.include_router(openai_route.router, prefix='/question')
-    app.include_router(questions_to_user.router, prefix='/questions-to-user')
-    app.include_router(users.router, prefix='/users')
+    app.include_router(questions_route.router, prefix='/question')
+    app.include_router(users_route.router, prefix='/users')
 
 
 if __name__ == "__main__":

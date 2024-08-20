@@ -22,3 +22,14 @@ def check_and_add_allowed_topics():
         raise f"Database operation failed: {o}"
     except Exception as e:
         raise f"An unexpected error occurred: {e}"
+
+
+def get_topics():
+    try:
+        collection = setup_mongodb(client=None, collection_name='topics')
+        topics = {doc['name'] for doc in collection.find()}
+        return topics
+    except errors.ConnectionFailure as c:
+        raise f"Connection error occurred: {c}"
+    except Exception as e:
+        raise f"An unexpected error occurred: {e}"
