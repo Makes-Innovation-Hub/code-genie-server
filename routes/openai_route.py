@@ -32,14 +32,14 @@ async def gen_question(body: GenBody, response: Response):
 
 
 @router.post('/evaluate')
-async def evaluate_question(body: QARequest, response: Response):
+async def evaluate_question(body: QARequest,ai_answer:str, response: Response):
     try:
         user_id = body.user_id
         question_text = body.question_text
         topic = body.topic
         difficulty = body.difficulty
         answer = body.answer
-        evaluation_score = evaluate_answer(question=question_text, answer=answer)
+        evaluation_score = evaluate_answer(question=question_text, answer=answer,ai_answer=ai_answer)
         users.add_user_stats(user_id=user_id, question_text=question_text, answer=answer, topic=topic,
                              difficulty=difficulty,
                              score=evaluation_score["Score"], answer_correct=(evaluation_score["Score"] >= 5),
