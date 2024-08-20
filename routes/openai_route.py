@@ -24,7 +24,7 @@ async def gen_question(body: GenBody, response: Response):
     try:
         while attempts < max_attempts:
             answer = get_question_and_answer(topic, difficulty, answers_num)
-            if answers_num == len(answer['Answer']):
+            if (answers_num and answers_num == len(answer['Answer'])) or (not answers_num and len(answer['Answer']) == 1):
                 return answer
             attempts += 1
             
@@ -34,7 +34,6 @@ async def gen_question(body: GenBody, response: Response):
         print(e)
         response.status_code = 400
         return {"error": str(e)}
-
 
 @router.post('/evaluate')
 async def evaluate_question(body: QARequest,ai_answer:str, response: Response):
