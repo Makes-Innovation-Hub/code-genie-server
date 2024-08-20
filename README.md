@@ -202,3 +202,36 @@ An example of how a question and its details is stored in the database:
 ```
 
 As shown in the above example, one question can be answered by many users and each user is represented by his ID
+
+# Running on Docker
+
+- In order to run the project on docker for the **first time**, ***or*** you have updated the server, run the following commands in terminal:
+
+```shell
+cd path/to/your/project
+docker-compose build
+docker-compose up
+```
+
+- If you have already run the above commands before, and you just want to run the server on docker run the following command:
+
+```shell
+docker-compose up
+```
+
+- To stop the server run the following command:
+
+```shell
+docker-compose down
+```
+
+- Since the default environment is the `dev` the docker will run using `.env.dev` file on port `8002`.
+- The docker file also exposed to ports `8000` and `8001`. So in order to run in `prod` environment you must change `globals.env_status` to `prod` which will run the docker on port `8001`.
+
+- To push the docker image to the docker hub you have to build it first and then run the following commands in the terminal:
+
+```shell
+docker tag <your-image-name> <your-docker-username>/<the-image-name-you-want-to-have-at-dockerhub>:<your-image-tag>
+docker login
+docker push <your-docker-username>/<the-image-name-you-want-to-have-at-dockerhub>:<your-image-tag>
+```

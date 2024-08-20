@@ -29,7 +29,7 @@ if __name__ == "__main__":
         # start server
         add_routes()
         port = 8002 if globals.env_status == "dev" else 8001
-        uvicorn.run(app, host="127.0.0.1", port=port)
+        uvicorn.run(app, host="0.0.0.0", port=port)
 
     except Exception as e:
         print(e)
