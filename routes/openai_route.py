@@ -13,7 +13,7 @@ async def gen_question(body: GenBody, response: Response):
     topic = body.topic
     difficulty = body.difficulty
     answers_num = body.answers_num
-    max_attempts = 3
+    max_attempts = 5
     attempts = 0
     
     try:
@@ -23,7 +23,7 @@ async def gen_question(body: GenBody, response: Response):
                 return answer
             attempts += 1
             
-        raise HTTPException(status_code=400, detail="Failed to generate a valid question after 3 attempts.")
+        raise HTTPException(status_code=400, detail="Failed to generate a valid question after 5 attempts.")
     
     except Exception as e:
         print(e)
