@@ -40,7 +40,7 @@ async def evaluate_question(body: QARequest,ai_answer:str, response: Response):
         difficulty = body.difficulty
         answer = body.answer
         evaluation_score = evaluate_answer(question=question_text, answer=answer,ai_answer=ai_answer)
-        users.add_user_stats(user_id=user_id, question_text=question_text, answer=answer, topic=topic,
+        users_db_functions.add_user_stats(user_id=user_id, question_text=question_text, answer=answer, topic=topic,
                              difficulty=difficulty,
                              score=evaluation_score["Score"], answer_correct=(evaluation_score["Score"] >= 5),
                              client=globals.mongo_client)
