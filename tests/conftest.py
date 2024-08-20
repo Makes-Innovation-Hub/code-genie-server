@@ -4,14 +4,21 @@ from dotenv import load_dotenv
 from globals import globals
 from config import db_config 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--env",
+        action="store",
+        default="dev",
+        help="Specify the environment: dev or prod"
+    )
 
 @pytest.fixture(scope="session", autouse=True)
-def setup():
-    load_env_vars()
+def setup(pytestconfig):
+    load_env_vars(pytestconfig)
     db_config.set_mongo_client()
 
-def load_env_vars():
-    env = globals.env_status or "dev" # need to fix to allow prod testing too
+def load_env_vars(pytestconfig):
+    env = pytestconfig.getoption('env')
     try:
         file_path = f".env.{env}"
         if os.path.isfile(file_path):
