@@ -27,7 +27,7 @@ async def load_topics():
         raise f"An unexpected error occurred: {e}"
 
 
-@router.post('/topics/')
+@router.post('/topics')
 async def add_topic(topic: str):
     try:
         topics = get_topics()
