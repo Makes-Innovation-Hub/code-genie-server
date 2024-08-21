@@ -29,7 +29,7 @@ def test_store_data():
 def test_load_topics_success():
     server_url = os.getenv("SERVER_URL")
     assert server_url is not None
-    url = f"{server_url}/question/topics"
+    url = f"{server_url}/question/topics/"
     response = requests.get(url)
     assert response.status_code == 200
     assert isinstance(response.json(), list)

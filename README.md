@@ -89,7 +89,31 @@ python server.py --env prod
 
 This will start the server on `127.0.0.1` (localhost) at port `8001`.
 
+# Running the tests
+
+**NOTE:** Make sure that the relevat(dev or prod) server is up and running.
+
+In order to run the tests you have to run the following commands:
+
+## To run the tests in development environment
+
+```shell
+cd path/to/your/project # Replace with the path to your project (root)
+pytest --env dev # for development environment
+#or
+pytest # for dev environment
+```
+
+## To run the tests in development environment
+
+```shell
+cd path/to/your/project # Replace with the path to your project (root)
+pytest --env prod # for production environment
+
+```
+
 # Mongodb setup collections
+
 # Users Database
 
 An example of how a user and its details is stored in the database:
@@ -123,7 +147,7 @@ An example of how a user and its details is stored in the database:
       "is_correct": true
     },
     {
-      "question_text":  "What is the key difference between React.js functional components and class components regarding state management?",
+      "question_text": "What is the key difference between React.js functional components and class components regarding state management?",
       "score": 2,
       "answer": "my answer",
       "topic": "Docker",
@@ -149,7 +173,7 @@ An example of how a user and its details is stored in the database:
     }
   }
 }
-```  
+```
 
 # Questions Database
 
@@ -178,4 +202,3 @@ An example of how a question and its details is stored in the database:
 ```
 
 As shown in the above example, one question can be answered by many users and each user is represented by his ID
-
