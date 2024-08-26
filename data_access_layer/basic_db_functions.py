@@ -1,6 +1,8 @@
 import random
 from fastapi import Request
 from logging_packages.logging_setup import logger, RequestIDMiddleware,log_request_handling
+from pymongo import errors
+from globals.CONSTANTS import ALLOWED_TOPICS
 from globals import globals as gb
 
 def store_num_in_db(request: Request):
