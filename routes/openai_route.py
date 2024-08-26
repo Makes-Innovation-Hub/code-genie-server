@@ -1,18 +1,26 @@
 from fastapi import APIRouter, Response, HTTPException
 from globals import globals
-from data_access_layer import users_db_functions
+from logging_packages.logging_setup import logger, RequestIDMiddleware,log_request_handling
+from data_access_layer import users, users_db_functions
+
 from services.openai_service import get_question_and_answer, evaluate_answer
 from data_types.openai_req_types import GenQuestionBody as GenBody, QARequest
 from pymongo.errors import PyMongoError
 
 router = APIRouter()
 
-
 @router.post('/generate')
-async def gen_question(body: GenBody, response: Response):
+async def gen_question(body:GenBody, response: Response, request: Request):
     topic = body.topic
     difficulty = body.difficulty
     answers_num = body.answers_num
+    request_id = request.state.request_id
+    try:
+        log_request_handling(request_id, "generating a new question.")
+        answer = get_question_and_answer(topic,difficulty,answers_num, request)
+        log_request_handling(request_id, "new question generated successfully.")
+
+        return answer
     max_attempts = 5
     attempts = 0
     
@@ -26,7 +34,7 @@ async def gen_question(body: GenBody, response: Response):
         raise HTTPException(status_code=400, detail="Failed to generate a valid question after 5 attempts.")
     
     except Exception as e:
-        print(e)
+        log_request_handling(request_id, e)
         response.status_code = 400
         return {"error": str(e)}
 
