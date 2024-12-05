@@ -2,6 +2,24 @@
 
 server for code genie
 
+## Team Members
+- Basel Amin
+- Mohammad Shaheen
+- Hasan Masalha
+- Aya Abbas
+- Shaden Hakim
+
+## Product Goal 
+This Code Genie server is the server for the Telegram bot named Code Genie. It designed to help graduates continue their studies and stay committed to practicing even after graduation
+
+## General Architecture
+This project includes the following main modules:
+- Routes
+- Database
+- Business Logic: OpenAI
+
+![Alt text](images/diagram.png)
+
 # folder structure for the project
 
     code-genie-server/
@@ -16,7 +34,8 @@ server for code genie
     ├── requirements.txt     # Python dependencies
     └── README.md            # Project documentation
 
----
+## Environment Variables
+
 
 # Environment Variables (Explanation)
 
@@ -28,7 +47,7 @@ The following environment variables are stored in `.env`. Loading and usage of t
 - `OPENAI_API_KEY`: The API Key used to make requests to the OpenAI API. Example: **sk-abcdefghijklmnopqrstuvwxyz1234567890abcd**
 - `SERVER_URL`: The online server url. Example: **https://online-server-url.onrender.com/**
 
-# Environment Variables (Usage)
+### Environment Variables - Usage
 
 To load environment variables from a `.env` file in Python, you can use the `python-dotenv` package. Here’s how you can do it:
 
